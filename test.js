@@ -5,5 +5,11 @@ const test = {
     role: "dev"
   }
 }
-delete test.ten;
-console.log(test)
+function a(c,d){
+  let test = {
+    ten:"long",
+    c:d
+  }
+  console.log(test);
+}
+a('tuoi',13);

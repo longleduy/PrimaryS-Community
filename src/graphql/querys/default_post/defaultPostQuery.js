@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_LIST_DEFAULT_POST_QUERY = gql`
-    query GetListDefaultPost{
-        getListDefaultPost{
+    query GetListDefaultPost($lastPostID: String){
+        getListDefaultPost(lastPostID: $lastPostID){
             userInfo{
             userID
             profileName

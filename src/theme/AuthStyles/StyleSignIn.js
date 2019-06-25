@@ -11,8 +11,9 @@ const StyleSignIn = StyleSheet.create({
     loginButton: { width: styleVariable.width100 * 0.9, borderColor: styleVariable.mainColor },
     loginInputForm: { width: styleVariable.width100 * 0.9, flex: 2, alignItems: 'center' },
     loginForgotView: {
-        flexDirection: 'row', justifyContent: 'center',
-        alignItems: 'center', marginTop: 10, paddingLeft: 5, paddingRight: 5
+        width:styleVariable.width100 *.9,
+        flexDirection: 'row', justifyContent: 'flex-end',
+        alignItems: 'flex-end', marginTop: 10, paddingLeft: 5, paddingRight: 5
     },
     loginSocial : {width: styleVariable.width100 * 0.9,justifyContent: 'center',flexDirection:'row',marginTop:15},
     loginSocialIconFb: {width: styleVariable.width100 * 0.1,height: styleVariable.width100 * 0.1,borderWidth:1,borderColor:'blue',borderRadius:50,padding:0},

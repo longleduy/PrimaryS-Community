@@ -1,23 +1,35 @@
-import React,{memo} from 'react'
+import React, { memo } from 'react'
 import { View, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Kohana } from 'react-native-textinput-effects';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppStyle from '../../theme/index';
 
 export const WarningInputText = memo((props) => {
     _onChange = (e) => {
         props._onChange(e);
     }
-    return <View style={{justifyContent:'center',marginBottom:15}}>
-        <TextInput
-            style={[props.style,props.error?AppStyle.StyleMain.textInputError:{borderWidth:1}]}
-            placeholder={props.placeholder}
-            keyboardType={props.keyboardType}
-            maxLength={props.maxLength}
-            onChangeText={this._onChange}
-            value={props.value}
-            editable = {props.editable !== null?props.editable:true}
-            secureTextEntry ={props.secureTextEntry}
-        />
-        {props.error && <Icon name='warning' size={17} color={AppStyle.styleVariable.mainColor} style={{position:'absolute',right:10}}/>}
-    </View>
+    return <View style={{flexDirection: 'row',marginBottom:props.marginBottom }}>
+            <Kohana
+                label={props.placeholder}
+                value={props.value}
+                iconClass={Icon}
+                iconName={props.iconName}
+                iconColor={AppStyle.styleVariable.actionButtonColor}
+                inputStyle={{ color: '#666', fontSize: 15 }}
+                inputPadding={14}
+                style={{
+                    borderWidth: props.error ? 1.5 : .5,
+                    borderColor: props.error ? 'red' : '#ccc',
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+                labelStyle={{ color: props.error ? 'red' : '#aaa', fontSize: 15 }}
+                useNativeDriver
+                onChangeText={this._onChange}
+                secureTextEntry={props.secureTextEntry}
+                keyboardType={props.keyboardType}
+                maxLength={props.maxLength}
+            />
+</View>
 })

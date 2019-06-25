@@ -5,7 +5,7 @@ import { Button, Checkbox } from 'react-native-paper';
 import { CheckBox1Form } from './CheckBox1Form';
 import { ButtonListForm } from './ButtonListForm';
 import { CreatePostContext } from '../CreatePostProvider';
-import {ListFrameWork} from '../RecruitmentPost/ListFramWorkForm';
+import {ListFrameWork} from '../../../utils/ListFramWorkForm';
 
 export const MainDefaultPostForm = memo((props) => {
     return (
@@ -21,7 +21,7 @@ export const MainDefaultPostForm = memo((props) => {
                             onChangeText={e => context._onHandlePostContent(e)}/>
                     </View>
                     <View style={{paddingHorizontal:15}}>
-                        <ListFrameWork context={context}/>
+                        <ListFrameWork postTag={context.postDefaultData.postTag} _onSetPostTag={context._onSetPostTag}/>
                     </View>
                     <ButtonListForm/>
                     <CheckBox1Form />

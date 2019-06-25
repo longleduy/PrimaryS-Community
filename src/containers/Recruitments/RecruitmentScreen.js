@@ -1,10 +1,15 @@
 import React, { PureComponent } from 'react';
 import { Surface } from 'react-native-paper'
-import { View, Dimensions, TextInput, Text, Alert } from 'react-native'
+import { View, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import RecruitmentForm from '../../components/Recruitments/RecruitmentForm'
-import AppStyle from '../../theme/index'
-let width = Dimensions.get('window').width
+//Todo: Components
+import RecruitmentForm from '../../components/Recruitments/RecruitmentForm';
+import GraphqlQueryPropRender from '../../components/utils/HOC_RDP/GraphqlQueryPropRender';
+//Todo: Styles
+import AppStyle from '../../theme/index';
+//Todo: GraphQl
+import { GET_LIST_RECRUITMENT_POST_QUERY } from '../../graphql/querys/recruitment_post/recruitmentPostQuery'
+
 class RecruitmentScreen extends PureComponent {
     static navigationOptions = ({ navigation, screenProps }) => {
         return {
@@ -15,7 +20,7 @@ class RecruitmentScreen extends PureComponent {
                         <TextInput placeholder='Tìm kiếm'
                             placeholderTextColor='#777'
                             style={[AppStyle.StyleHeader.headerSearch3TextInput]} />
-                        <Icon name='search' size={width * (1 / 14)}
+                        <Icon name='search' size={AppStyle.styleVariable.width100 * (1 / 14)}
                             style={AppStyle.StyleHeader.headerSearch2Icon} />
                     </Surface>
                 </View>,
@@ -24,12 +29,26 @@ class RecruitmentScreen extends PureComponent {
                 elevation: 0,
                 backgroundColor: 'transparent'
             },
-            headerTransparent: true
+            //headerTransparent: true
         }
     }
     render() {
+        console.log("RecruitmentScreen");
         return (
-            <RecruitmentForm/>
+            <GraphqlQueryPropRender
+                navigation={this.props.navigation}
+                query={GET_LIST_RECRUITMENT_POST_QUERY}
+                queryPropRender={({ loading, data, networkStatus, refetch, subscribeToMore, fetchMore }) => {
+                    return <RecruitmentForm
+                        navigation={this.props.navigation}
+                        networkStatus={networkStatus}
+                        refetch={refetch}
+                        data={data}
+                        isLoading={loading}
+                        subscribeToMore={subscribeToMore}
+                        fetchMore={fetchMore} />
+                }} />
+
         )
     }
 }

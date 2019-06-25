@@ -1,5 +1,6 @@
 import React, { Component, PureComponent, createRef, Fragment } from 'react';
 import { View, Text, ActivityIndicator, TextInput, BackHandler, Alert } from 'react-native';
+import Ripple from 'react-native-material-ripple';
 import jwtDecode from 'jwt-decode';
 import { withApollo } from 'react-apollo';
 import PropTypes from 'prop-types';
@@ -23,13 +24,9 @@ import { WarningInputText } from '../utils/WarningTextInput';
 import { SIGN_IN_MUTATION } from '../../graphql/mutations/userMutation';
 //Todo: LocalState graphql
 import { USER_INFO_MUTATION_STATE } from '../../graphql/localStates/mutation';
+//Todo: Native Module
+import FingerPrintAuthModule from '../../untils/native_modules/FingerPrintAuthModule'
 
-const optionalConfigObject = {
-    title: 'Xác thực',
-    imageColor: 'blue',
-    unifiedErrors: false,
-    cancelText: 'Hủy bỏ'
-};
 class SignInForm extends PureComponent {
     constructor(props) {
         super(props);
@@ -47,26 +44,16 @@ class SignInForm extends PureComponent {
             userNameTouchID: '',
             passWordTouchID: '',
             formError: '',
+            errorMessage: '',
             isLoading: false,
-            snackBar: {
-                errorMessage: '',
-                visible: false
-            }, touchIDSignIn: false
         }
     }
     _onChangeUserName = (e) => {
-        if (validEmail(e)) {
-            this.setState({
-                userName: e,
-                formError: ''
-            })
-        }
-        else {
-            this.setState({
-                userName: e,
-                formError: 'userName'
-            })
-        }
+        this.setState({
+            userName: e,
+            formError: this.state.formError === 'userName' ? '' : this.state.formError,
+            errorMessage: this.state.formError === 'userName' ? '' : this.state.errorMessage,
+        })
     }
     _onChangePassWord = (e) => {
         this.setState({
@@ -90,24 +77,30 @@ class SignInForm extends PureComponent {
             else if (!respone.data.signIn.isSuccess && respone.data.signIn.message) {
                 this.setState({
                     touchIDSignIn: false,
-                    snackBar: {
-                        errorMessage: respone.data.signIn.message,
-                        visible: true
-                    }
+                    errorMessage: respone.data.signIn.message
                 })
             }
             else {
                 this.setState({
                     touchIDSignIn: false,
-                    snackBar: {
-                        errorMessage: SIGN_IN_FAILDED,
-                        visible: true
-                    }
+                    errorMessage: SIGN_IN_FAILDED
                 })
             }
         }
         else {
-            Alert.alert('Cảnh báo', SIGN_IN_FORM_INVALID)
+            let field;
+            if (userName === '') {
+                field = 'userName';
+            }
+            else if (passWord === '') {
+                field = 'passWord';
+            }
+            if (field) {
+                return this.setState({
+                    formError: field
+                })
+            }
+            return Alert('Cảnh báo', SIGN_IN_FORM_INVALID)
         }
     }
     _createUserInfo = async (jsontoken) => {
@@ -126,38 +119,34 @@ class SignInForm extends PureComponent {
     _onSignInErrorHandler = (error) => {
         this.setState({
             touchIDSignIn: false,
-            snackBar: {
-                errorMessage: SIGN_IN_FAILDED,
-                visible: true
-            }
+            errorMessage: SIGN_IN_FAILDED
         })
     }
-    _onCloseSnackBar = () => {
-        this.setState({
-            snackBar: {
-                errorMessage: '',
-                visible: false
-            }
-        })
-    }
-    _pressHandler = () => {
-        TouchID.authenticate(null, optionalConfigObject)
-            .then(success => {
+    _onFingerPrintAuth = () => {
+        FingerPrintAuthModule.getFingerPrintAuth(
+            (msg) => {
+              Alert.alert(JSON.stringify(msg))
+            },
+            () => {
                 this.setState({
                     touchIDSignIn: true,
                     userNameTouchID: 'longldseatechit@gmail.com',
                     passWordTouchID: 'longkhanh94',
                 }, () => { this.loginBtnRef.current.props.onPress(); })
-            })
-            .catch(error => {
-                //Alert.alert('Authentication Failed');
-            });
+            },
+          );
     }
     async componentDidMount() {
         const result = await AsyncStorage.getItem('@token');
         if (result === 'SIGN_OUT') {
             await AsyncStorage.removeItem('@token');
             this.props.client.resetStore();
+        }
+        else{
+            setTimeout(() => {
+                this._onFingerPrintAuth();
+            },800)
+ 
         }
     }
     render() {
@@ -177,19 +166,33 @@ class SignInForm extends PureComponent {
                             alignItems: 'center',
                             zIndex: 999999
                         }}>
-                            <ActivityIndicator color='white' size='large' />
+                            <View style={{backgroundColor:'white',
+                            flexDirection:'row',
+                            paddingHorizontal:10,
+                            paddingVertical:5,
+                            alignItems:'center',
+                            borderRadius:16}}>
+                                <ActivityIndicator 
+                                color={AppStyle.styleVariable.mainColor}
+                                size={25} 
+                                style={{marginRight:5}}/>
+                                <Text style={{fontWeight:'bold',
+                                fontSize:15,
+                                color:AppStyle.styleVariable.mainColor
+                                }}>Đăng nhập...</Text>
+                            </View>
                         </View>
                         }
                         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                             <Transition shared='logo'>
-                                <Icon name='bubble-chart' size={100} color={AppStyle.styleVariable.mainColor} />
+                                <Icon name='bubble-chart' size={120} color={AppStyle.styleVariable.mainColor} />
                             </Transition>
-                            <Transition appear='scale'>
+                            {/* <Transition appear='scale'>
                                 <Text style={AppStyle.StyleLoading.welcomeBigText}>{APP_NAME}</Text>
-                            </Transition>
+                            </Transition> */}
                         </View>
                         <Transition appear='scale'>
-                            <View style={AppStyle.StyleSignIn.loginInputForm}>
+                            <View style={[AppStyle.StyleSignIn.loginInputForm]}>
                                 <WarningInputText
                                     style={[AppStyle.StyleSignIn.loginTextInput]}
                                     placeholder='Tên đăng nhập'
@@ -198,60 +201,85 @@ class SignInForm extends PureComponent {
                                     _onChange={e => this._onChangeUserName(e)}
                                     value={this.state.userName}
                                     error={state.formError === 'userName'}
+                                    iconName='at'
+                                    marginBottom={15}
                                 />
-                                <TextInput style={[AppStyle.StyleSignIn.loginTextInput, { marginBottom: 15 }]}
+                                <WarningInputText
+                                    style={[AppStyle.StyleSignIn.loginTextInput]}
                                     placeholder='Mật khẩu'
                                     secureTextEntry={true}
                                     maxLength={50}
+                                    _onChange={e => this._onChangePassWord(e)}
                                     value={this.state.passWord}
-                                    onChangeText={this._onChangePassWord}
+                                    error={state.formError === 'passWord'}
+                                    iconName='shield-key-outline'
                                 />
-                                {/* <Button mode="contained" color={AppStyle.styleVariable.mainColor}
-                                    ref={this.loginBtnRef}
-                                    style={AppStyle.StyleSignIn.loginButton}
-                                    onPress={() => this._onValidForm(action)}>
-                                    Đăng nhập
-                            </Button> */}
                                 <View style={AppStyle.StyleSignIn.loginForgotView}>
-                                    <Text style={{ flex: 1, fontSize: 13, height: 30 }}>Quên mật khẩu?</Text>
-                                    <Text style={{ flex: 1, textAlign: 'right', fontSize: 13, height: 30 }}
-                                        onPress={() => this.props.navigation.navigate('SignUp')}>Đăng ký</Text>
+                                    <Text style={{ fontSize: 13 }}>Quên mật khẩu?</Text>
+                                    {/* <Text style={{ flex: 1, textAlign: 'right', fontSize: 13, height: 30 }}
+                                        onPress={() => this.props.navigation.navigate('SignUp')}>Đăng ký</Text> */}
                                 </View>
                                 <View style={AppStyle.StyleSignIn.loginSocial}>
                                     <IconButton color='green' style={AppStyle.StyleSignIn.loginFingerprint}
-                                        icon='fingerprint' onPress={this._pressHandler} />
+                                        icon='fingerprint' onPress={this._onFingerPrintAuth} />
                                     <IconButton color='blue' style={AppStyle.StyleSignIn.loginSocialIconFb}
                                         icon={() => <IconMaterialdesignicons name='facebook' size={20} color='blue' />} onPress={() => false} />
                                     <IconButton color={AppStyle.styleVariable.mainColor} style={AppStyle.StyleSignIn.loginSocialIconGg}
                                         icon={() => <IconMaterialdesignicons name='google' size={20} color={AppStyle.styleVariable.mainColor} />} onPress={() => false} />
                                 </View>
-                                <IconButton
-                                    onPress={() => this._onValidForm(action)}
-                                    icon={() => <IconMaterialdesignicons
-                                        name='login-variant'
-                                        size={25} color='white' />}
-                                    color={AppStyle.styleVariable.mainColor}
-                                    style={{
-                                        position: 'absolute', bottom: 10, right: 0,
-                                        backgroundColor: AppStyle.styleVariable.mainColor, justifyContent: 'center',
-                                        alignItems: 'center', borderRadius: 100, elevation: 2,
-                                        borderColor: 'white', borderWidth: .5, width: 50, height: 50
-                                    }} />
+                                {this.state.errorMessage != '' && this.state.errorMessage && <View style={{
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    flexGrow: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <IconMaterialdesignicons
+                                        size={22}
+                                        color='red'
+                                        style={{ marginRight: 5 }}
+                                        name='alert-circle-outline' />
+                                    <Text
+                                        style={{
+                                            color: 'red',
+                                            fontSize: 17,
+                                            fontWeight: 'bold'
+                                        }}>{this.state.errorMessage}</Text>
+                                </View>}
                             </View>
 
                         </Transition>
-                        <Snackbar
-                            duration={15000}
-                            visible={this.state.snackBar.visible}
-                            style={{ backgroundColor: AppStyle.styleVariable.mainColor }}
-                            onDismiss={() => this._onCloseSnackBar()}
-                            action={{
-                                label: 'Quay lại',
-                                onPress: () => { this._onCloseSnackBar() },
-                            }}
-                        >
-                            {this.state.snackBar.errorMessage}
-                        </Snackbar>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: AppStyle.styleVariable.width100,
+                            paddingHorizontal: 15,
+                            marginVertical: 15
+                        }}>
+                            <Ripple
+                                rippleColor='#ccc'
+                                style={{
+                                    paddingVertical: 10,
+                                    paddingHorizontal: 15,
+                                    borderRadius: 4
+                                }}
+                                onPress={() => this.props.navigation.navigate('SignUp')}>
+                                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Tạo tài khoản</Text>
+                            </Ripple>
+                            <IconButton
+                                ref={this.loginBtnRef}
+                                onPress={() => this._onValidForm(action)}
+                                icon={() => <IconMaterialdesignicons
+                                    name='login-variant'
+                                    size={25} color='white' />}
+                                color={AppStyle.styleVariable.mainColor}
+                                style={{
+                                    backgroundColor: AppStyle.styleVariable.mainColor, justifyContent: 'center',
+                                    alignItems: 'center', borderRadius: 100, elevation: (loading || state.isLoading)?0:2,
+                                    borderColor: 'white', borderWidth: .5, width: 50, height: 50
+                                }} />
+                        </View>
                     </View>
                 )}
             </Mutation>

@@ -1,10 +1,11 @@
-import React, { Component, PureComponent } from 'react';
-import SignUpForm from '../../components/AuthForms/SignUpForm'
+import React, { memo } from 'react';
+import SignUpProvider from '../../components/AuthForms/SignUp/SignUpForm'
 
-export default class SignUpScreen extends PureComponent {
-    render() {
-        return (
-            <SignUpForm navigation={this.props.navigation}/>
-        )
-    }
-}
+const SignUpScreen = memo(props => {
+    return (
+        <SignUpProvider
+            navigation={props.navigation}
+        />
+    )
+})
+export default SignUpScreen;

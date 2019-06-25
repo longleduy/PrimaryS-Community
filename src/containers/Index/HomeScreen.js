@@ -1,4 +1,4 @@
-import React, { PureComponent,Component } from 'react';
+import React, { PureComponent, Component } from 'react';
 import { View, ActivityIndicator, BackHandler, Text, Dimensions, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { withApollo } from 'react-apollo';
@@ -102,15 +102,16 @@ class HomeScreen extends PureComponent {
       <GraphqlQueryPropRender
         navigation={this.props.navigation}
         query={GET_LIST_DEFAULT_POST_QUERY}
-        queryPropRender={({ loading, data,networkStatus, refetch,subscribeToMore }) => {
+        queryPropRender={({ loading, data, networkStatus, refetch, subscribeToMore, fetchMore }) => {
           return <HomeForm
             navigation={this.props.navigation}
             networkStatus={networkStatus}
             refetch={refetch}
             collapsible={this.props.collapsible}
             data={data}
-            isLoading={loading} 
-            subscribeToMore={subscribeToMore}/>
+            loading={loading}
+            subscribeToMore={subscribeToMore}
+            fetchMore={fetchMore} />
         }} />
     )
   }

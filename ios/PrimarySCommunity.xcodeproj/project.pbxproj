@@ -61,6 +61,7 @@
 		50DB5529C8AE489E8CDF8C05 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD63392B61243F4BA6E08C7 /* libRNCAsyncStorage.a */; };
 		3369C91165CB4E30A0512EA2 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA7188B10B14753ACFB2278 /* libTouchID.a */; };
 		9CFB53F62E5D4517A9F8B815 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C985365E228404897D27567 /* libRNImagePicker.a */; };
+		67F9EB4603FF4FCB97D22797 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8CCB5A4803420D9EA796F3 /* libReactNativeExceptionHandler.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -395,6 +396,8 @@
 		4EA7188B10B14753ACFB2278 /* libTouchID.a */ = {isa = PBXFileReference; name = "libTouchID.a"; path = "libTouchID.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F7FBECD5F444485CBC40AB31 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		9C985365E228404897D27567 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		AF618080194A40A9894824E6 /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeExceptionHandler.xcodeproj"; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3A8CCB5A4803420D9EA796F3 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; name = "libReactNativeExceptionHandler.a"; path = "libReactNativeExceptionHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -428,6 +431,7 @@
 				50DB5529C8AE489E8CDF8C05 /* libRNCAsyncStorage.a in Frameworks */,
 				3369C91165CB4E30A0512EA2 /* libTouchID.a in Frameworks */,
 				9CFB53F62E5D4517A9F8B815 /* libRNImagePicker.a in Frameworks */,
+				67F9EB4603FF4FCB97D22797 /* libReactNativeExceptionHandler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +628,7 @@
 				CC7FC9CF295B4CECA6C7A85F /* RNCAsyncStorage.xcodeproj */,
 				EBE7104B5BAB4CA8A918C04A /* TouchID.xcodeproj */,
 				F7FBECD5F444485CBC40AB31 /* RNImagePicker.xcodeproj */,
+				AF618080194A40A9894824E6 /* ReactNativeExceptionHandler.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1297,6 +1302,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1305,6 +1311,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Debug;
@@ -1333,6 +1340,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1341,6 +1349,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Release;
@@ -1368,6 +1377,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Debug;
@@ -1394,6 +1404,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Release;
@@ -1430,6 +1441,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1438,6 +1450,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Debug;
@@ -1474,6 +1487,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1482,6 +1496,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Release;
@@ -1517,6 +1532,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1525,6 +1541,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Debug;
@@ -1560,6 +1577,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1568,6 +1586,7 @@
 					"$(SRCROOT)\..\node_modules\@react-native-community\async-storage\ios",
 					"$(SRCROOT)\..\node_modules\react-native-touch-id",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 				);
 			};
 			name = Release;

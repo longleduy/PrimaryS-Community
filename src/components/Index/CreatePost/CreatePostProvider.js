@@ -2,11 +2,8 @@ import React, { PureComponent, createContext, Fragment } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { withApollo } from 'react-apollo';
 import { IconButton } from 'react-native-paper'
-import Ripple from 'react-native-material-ripple';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MainDefaultPostForm } from './CreatePostDefault/MainDefaultPostForm';
-import { RecruitmentPostForm } from './RecruitmentPost/RecruitmentPostForm';
 import AppStyle from '../../../theme/index';
 //Todo: Componet
 import { MySnackBar } from '../../utils/MySnackbar';
@@ -92,7 +89,7 @@ class CreatePostForm extends PureComponent {
             this.setState({
                 roleForm: 'TL'
             })
-        }, 0)
+        }, 10)
     }
     _onSwitchRolePostForm = (role) => {
         this.setState({
@@ -165,34 +162,14 @@ class CreatePostForm extends PureComponent {
                 <IconButton
                     onPress={this._onCreatePost}
                     icon='done' color='white' size={25} style={{
-                        position: 'absolute', bottom: 50, right: 15, zIndex: 99,
+                        position: 'absolute', bottom: 15, right: 15, zIndex: 99,
                         backgroundColor: AppStyle.styleVariable.mainColor, justifyContent: 'center',
                         alignItems: 'center', borderRadius: 100, elevation: 5,
                         borderColor: 'white', borderWidth: .5, width: 45, height: 45
                     }} />
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
                     <View style={{ paddingVertical: 15 }}>
-                        <View style={{ paddingLeft: 15 }}>
-                            <View style={AppStyle.StyleCreatePost.postRoleView}>
-                                <Ripple
-                                    rippleColor='green'
-                                    disabled={this.state.roleForm === 'TL'}
-                                    style={this.state.roleForm === 'TL' ? AppStyle.StyleCreatePost.postRoleButtonActive : AppStyle.StyleCreatePost.postRoleButtonNotActive}
-                                    onPress={() => this._onSwitchRolePostForm('TL')}>
-                                    <Text style={this.state.roleForm === 'TL' ? AppStyle.StyleCreatePost.postRoleButtonTextActv : AppStyle.StyleCreatePost.postRoleButtonText}>Tạo cuộc thảo luận</Text>
-                                </Ripple>
-                                <Ripple
-                                    rippleColor='green'
-                                    disabled={this.state.roleForm === 'TD'}
-                                    style={this.state.roleForm === 'TD' ? AppStyle.StyleCreatePost.postRoleButtonActive : AppStyle.StyleCreatePost.postRoleButtonNotActive}
-                                    onPress={() => this._onSwitchRolePostForm('TD')}
-                                >
-                                    <Text style={this.state.roleForm === 'TD' ? AppStyle.StyleCreatePost.postRoleButtonTextActv : AppStyle.StyleCreatePost.postRoleButtonText}>Đăng tin tuyển dụng</Text>
-                                </Ripple>
-                            </View>
-                        </View>
                         {this.state.roleForm === 'TL' && <MainDefaultPostForm />}
-                        {this.state.roleForm === 'TD' && <RecruitmentPostForm />}
                     </View>
                 </ScrollView>
             </Fragment>

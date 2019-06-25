@@ -7,8 +7,16 @@ import HomePostForm from './HomePostForm';
 import AppStyle from '../../theme/index';
 const HomeForm = memo(props => {
   console.log("HomeForm");
-  const { data, isLoading,networkStatus, collapsible, navigation, subscribeToMore, refetch, collapsible: { paddingHeight, onScroll } } = props;
-  if (isLoading && !data) return <View style={AppStyle.StyleMain.flexViewCenter}>
+  const { data,
+    loading,
+    networkStatus,
+    collapsible,
+    navigation,
+    subscribeToMore,
+    refetch, 
+    fetchMore,
+    collapsible: { paddingHeight, onScroll } } = props;
+  if (networkStatus === 1) return <View style={AppStyle.StyleMain.flexViewCenter}>
     <ActivityIndicator size={30} color={AppStyle.styleVariable.mainColor} />
   </View>
   return (
@@ -36,7 +44,8 @@ const HomeForm = memo(props => {
         navigation={navigation}
         refetch={refetch}
         listDefaultPost={data.getListDefaultPost}
-        subscribeToMore={subscribeToMore} />
+        subscribeToMore={subscribeToMore} 
+        fetchMore={fetchMore}/>
     </View>
   )
 })

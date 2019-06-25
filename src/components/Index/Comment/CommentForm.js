@@ -49,7 +49,7 @@ const CommentForm = memo(props => {
             icon={() => loading? <ActivityIndicator size={15} color='white' />:<IconMaterialdesignicons
                 name='plus'
                 size={20} color='white' />}
-            color={AppStyle.styleVariable.actionButtonColor}
+            color={AppStyle.styleVariable.mainColor}
             style={{
                 position: 'absolute', top: 10, right: 10,
                 backgroundColor: AppStyle.styleVariable.mainColor, justifyContent: 'center',
