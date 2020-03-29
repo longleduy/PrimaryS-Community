@@ -26,7 +26,7 @@ const stateLink = withClientState({
 })
 //Todo: Websocket link
 const wsLink = new WebSocketLink({
-  uri: 'ws://192.168.137.1:4000/graphql',
+  uri: 'ws://192.168.1.17:4000/graphql',
   options: {
     reconnect: true,
   },
@@ -34,7 +34,7 @@ const wsLink = new WebSocketLink({
 });
 //Todo: Http link
 const httpLink = createHttpLink({
-  uri: 'http://192.168.137.1:4000/graphql',
+  uri: 'http://192.168.1.17:4000/graphql',
   credentials: 'include'
 });
 //Todo: Apollo link context

@@ -13,6 +13,7 @@ export const GET_CHAT_MESSAGE_NOTIFICATION_QUERY = gql`
             notificationContent     
             userNewNotification
             userReadNotification
+            userReadedNotification
             createTime
         }
     }

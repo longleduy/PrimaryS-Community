@@ -1,11 +1,11 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { IconButton, Button } from 'react-native-paper';
+//import { IconButton, Button } from 'react-native-paper';
 import {withApollo} from 'react-apollo'
 import PropTypes from 'prop-types';
 import {  View, Image, Text, Dimensions, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import AppStyle from '../../theme/index'
+//import AppStyle from '../../theme/index'
 let width = Dimensions.get('window').width
 class SideMenuForm extends React.Component {
     render() {
@@ -15,7 +15,7 @@ class SideMenuForm extends React.Component {
         } catch (error) {}
         return (
             <View style={{ flex: 1, alignItems: "center" }} >
-                <ImageBackground source={require('../../assets/wallpaper.png')} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                {/* <ImageBackground source={require('../../assets/wallpaper.png')} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                     <IconButton icon='keyboard-backspace'
                         size={40}
                         color='white'
@@ -84,7 +84,7 @@ class SideMenuForm extends React.Component {
                             </View>
                         </View>
                     </View>
-                </ImageBackground>
+                </ImageBackground> */}
             </View>
         );
     }

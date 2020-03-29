@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import AppStyle from '../../theme/index';
 
 const ChatMessageNotificationItemForm = memo(props => {
+    console.log("ChatMessageNotificationItemForm");
     let { item,
         item: {
             chatNotificationID,
@@ -19,21 +20,23 @@ const ChatMessageNotificationItemForm = memo(props => {
             notificationContent,
             userNewNotification,
             userReadNotification,
+            userReadedNotification,
             createTime
-        },navigation } = props;
+        }, navigation, currentUserID } = props;
     const getStatusMessage = () => {
-        if (!userReadNotification) {
-            return <MaterialCommunityIcons
-                name='email-open'
-                size={15} 
-                style={{marginRight:5}}/>
+        if (!userReadNotification && currentUserID !== userReadedNotification) {
+            return <Avatar.Image
+                size={AppStyle.styleVariable.width100 * (2 / 60)}
+                source={{ uri: avatar }}
+                style={{ marginRight: 5 }}
+            />
         }
         if (userReadNotification && userReadNotification !== item.userID) {
             return <MaterialCommunityIcons
-            name='reply'
-            color='green'
-            size={17} 
-            style={{marginRight:5}}/>
+                name='reply'
+                color='green'
+                size={17}
+                style={{ marginRight: 5 }} />
         }
         return null
     }
@@ -42,8 +45,8 @@ const ChatMessageNotificationItemForm = memo(props => {
             style={{
                 marginVertical: 2,
                 paddingVertical: 10,
-                width: AppStyle.styleVariable.width100,
-                flexDirection: 'row'
+                flexDirection: 'row',
+                marginRight:  10
             }}
             onPress={() => navigation.navigate('ChatMessageStack', {
                 chatStackFrom: item.from
@@ -51,17 +54,17 @@ const ChatMessageNotificationItemForm = memo(props => {
             <View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth:2,
-                borderColor:'#ddd',
-                borderRadius:100,
-                marginHorizontal:15
+                borderWidth: 2,
+                borderColor: '#ddd',
+                borderRadius: 100,
+                marginHorizontal: 15
             }}>
                 <Avatar.Image
                     size={AppStyle.styleVariable.width100 * (2 / 14)}
                     source={{ uri: avatar }}
                 />
             </View>
-            <View style={{ flexGrow:1 }}>
+            <View style={{ flexGrow: 1,width:0}}>
                 <View style={{
                     flex: 1,
                     flexDirection: 'row'
@@ -69,30 +72,37 @@ const ChatMessageNotificationItemForm = memo(props => {
                     <Text style={{
                         fontSize: 15,
                         fontWeight: 'bold',
-                        color:item.userID === userReadNotification?'#333':'#777'
+                        color: item.userID === userReadNotification ? '#333' : '#777'
                     }}>
                         {profileName}
                     </Text>
                 </View>
                 <View style={{
                     flex: 15,
-                    marginVertical:3,
+                    marginVertical: 3,
                     alignItems: 'center',
-                    flexDirection:'row',
-                    
+                    flexDirection: 'row'
+
                 }}>
                     {getStatusMessage()}
                     <Text
-                    style={{fontWeight:item.userID === userReadNotification?'bold':'normal',
-                            color:item.userID === userReadNotification?'#333':'#666'}}>
+                        numberOfLines={1}
+                        style={{
+                            fontWeight: item.userID === userReadNotification ? 'bold' : 'normal',
+                            color: item.userID === userReadNotification ? '#333' : '#666',
+                            flexGrow:1,
+                            width:0
+                        }}>
                         {notificationContent}
                     </Text>
                     {item.userID === userReadNotification && <Avatar.Image
-                    size={AppStyle.styleVariable.width100 * (2 / 45)}
-                    style={{position:'absolute',
-                    right:20}}
-                    source={{ uri: avatar }}
-                />}
+                        size={AppStyle.styleVariable.width100 * (2 / 45)}
+                        style={{
+                            position: 'absolute',
+                            right: 20
+                        }}
+                        source={{ uri: avatar }}
+                    />}
                 </View>
                 <View style={{ flex: 1 }}>
                     <Text style={{ fontSize: 12 }}>{createTime}</Text>

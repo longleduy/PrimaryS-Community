@@ -1,29 +1,29 @@
-import React, { memo } from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import React, { memo, useEffect } from 'react';
+import { View, FlatList, ActivityIndicator, Text } from 'react-native';
 import PropTypes from 'prop-types';
 //Todo: Styles
 import AppStyle from '../../theme/index';
 //Todo: Components
 import ChatMessageNotificationItemForm from './ChatMessageNotificationItemForm';
+import ChatMessageNotificationFlatListForm from './ChatMessageNotificationFlatListForm';
+//Todo: GraphQL
+import { CREATE_CHAT_MESSAGE_NOTIFICATION_SUB } from '../../graphql/subscriptions/chat_notification/chatNotificationSubcription'
+
 const ChatMessageNotificationForm = memo(props => {
-    let { data: { getChatMessageNotification }, networkStatus, navigation, refetch } = props;
-    if (networkStatus === 1) return <View style={AppStyle.StyleMain.flexViewCenter}>
+    let { data: { getChatMessageNotification }, networkStatus, navigation, refetch, subscribeToMore,loading2 } = props;
+    if (networkStatus === 1 || loading2) return <View style={AppStyle.StyleMain.flexViewCenter}>
         <ActivityIndicator size={30} color={AppStyle.styleVariable.mainColor} />
     </View>
+    let {data2: { queryUserInfo: {userID} }} = props;
+    console.log(userID);
     return (
-        <FlatList
-            data={getChatMessageNotification}
-            onRefresh={() => refetch()}
-            refreshing={networkStatus === 4}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => <ChatMessageNotificationItemForm
-                item={item}
-                navigation={navigation}
-            />
-            }
-            keyExtractor={(item) => item.chatNotificationID}
-            contentContainerStyle={{ paddingBottom: 60 }}
-            style={{ paddingTop: 60 }}
+        <ChatMessageNotificationFlatListForm
+            listNotification={getChatMessageNotification}
+            refetch={refetch}
+            networkStatus={networkStatus}
+            currentUserID = {userID}
+            navigation={navigation}
+            subscribeToMore={subscribeToMore}
         />
     )
 })

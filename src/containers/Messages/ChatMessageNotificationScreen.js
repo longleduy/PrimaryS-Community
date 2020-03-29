@@ -4,11 +4,13 @@ import { View,TextInput} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //Todo: Components
 import ChatMessageNotificationForm from '../../components/Messages/ChatMessageNotificationForm';
-import GraphqlQueryPropRender from '../../components/utils/HOC_RDP/GraphqlQueryPropRender';
+import GraphqlMutilQueryPropRender from '../../components/utils/HOC_RDP/GraphqlMutilQueryPropRender';
 //Todo: Styles
 import AppStyle from '../../theme/index';
 //Todo: GraphQLs
 import {GET_CHAT_MESSAGE_NOTIFICATION_QUERY} from '../../graphql/querys/notifications/notificationQuery';
+//Todo: LocalState GraphQL
+import { QUERY_USER_INFO } from '../../graphql/localStates/query';
 
 class ChatMessageNotificationScreen extends PureComponent {
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -32,16 +34,19 @@ class ChatMessageNotificationScreen extends PureComponent {
     }
     render() {
         return (
-            <GraphqlQueryPropRender
+            <GraphqlMutilQueryPropRender
                 navigation={this.props.navigation}
-                query={GET_CHAT_MESSAGE_NOTIFICATION_QUERY}
-                queryPropRender={({ loading, data, networkStatus, refetch, subscribeToMore, fetchMore }) => {
+                query1={GET_CHAT_MESSAGE_NOTIFICATION_QUERY}
+                query2={QUERY_USER_INFO}
+                queryPropRender={({ loading1, data1,loading2,data2, networkStatus, refetch, subscribeToMore, fetchMore }) => {
                     return <ChatMessageNotificationForm
                         navigation={this.props.navigation}
                         networkStatus={networkStatus}
                         refetch={refetch}
-                        data={data}
-                        loading={loading}
+                        data={data1}
+                        data2={data2}
+                        loading={loading1}
+                        loading2 = {loading2}
                         subscribeToMore={subscribeToMore}
                         fetchMore={fetchMore} />
                 }} />

@@ -5,6 +5,7 @@ import SignInScreen from '../../containers/AuthScreens/SignInScreen';
 import SignUpScreen from '../../containers/AuthScreens/SignUpScreen'
 import { HomeTabNavigator } from '../tab_navigator/HomeTabNavigator'
 import { HomeDrawerNavigator } from '../drawer_navigator/HomeDrawerNavigator'
+import {QRCodeTabNavigator} from '../tab_navigator/QRCodeTabNavigator';
 
 const SignSwitchNavigator = createSwitchNavigator({
     SignIn: {
@@ -17,6 +18,7 @@ const SignSwitchNavigator = createSwitchNavigator({
 const HomeSwitchNavigator = createSwitchNavigator({
     Sign: SignSwitchNavigator,
     Index: HomeTabNavigator,
+    QRCode: QRCodeTabNavigator
 }
 )
 const AuthSwitchNavigator = createFluidNavigator({

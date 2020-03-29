@@ -119,13 +119,13 @@ const RecruitmentItemForm = memo(props => {
         <View style={{
             flexGrow: 1,
             flexDirection: 'row',
-            alignItems: 'center',
             paddingHorizontal: 15,
             paddingVertical: 3
         }}>
             <View style={{
                 flexDirection: 'row',
-                flexGrow: 1
+                flexGrow: 1,
+                width:0,flexWrap: 'wrap'
             }}>
                 <Text style={{ fontWeight: 'bold' }}>
                     Vị trí:

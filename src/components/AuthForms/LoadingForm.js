@@ -10,6 +10,7 @@ import AppStyle from '../../theme/index';
 
 class LoadingForm extends PureComponent {
     componentDidMount = async() =>{
+        return this.props.navigation.navigate('QRCode');
         const isAuth = await AsyncStorage.getItem('@token');
         setTimeout(() => {
             if(isAuth !== '' && isAuth !== null && isAuth !== 'SIGN_OUT') return this.props.navigation.navigate('Index');
